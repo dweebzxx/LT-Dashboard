@@ -194,15 +194,16 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center justify-center gap-2 py-4 font-semibold whitespace-nowrap transition-all border-b-4 ${
-                      isUth ? 'px-1 text-xs w-10 flex-none' : 'px-2 text-xs md:text-sm flex-1'
+                      isUth ? 'px-1 w-12 flex-none' : 'px-2 text-xs md:text-sm flex-1'
                     } ${
                       isActive
                         ? 'bg-red-50 text-red-700 border-red-600'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 border-transparent'
                     }`}
+                    title={isUth ? tab.label : ''}
                   >
-                    <Icon size={isUth ? 16 : 20} />
-                    <span>{tab.label}</span>
+                    <Icon size={isUth ? 20 : 20} />
+                    {!isUth && <span>{tab.label}</span>}
                   </button>
                 );
               })}
