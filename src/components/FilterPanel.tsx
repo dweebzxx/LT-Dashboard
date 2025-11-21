@@ -23,6 +23,7 @@ export const FilterPanel = () => {
       npsRange: [1, 5],
       nostalgiaRange: [0, 100],
       hasChildren27: 'all',
+      numberOfChildren: [],
     };
     setLocalFilters(defaultFilters);
     setFilters(defaultFilters);
@@ -217,6 +218,28 @@ export const FilterPanel = () => {
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Number of Children</label>
+            <div className="space-y-1">
+              {[
+                { value: 1, label: '1 Child' },
+                { value: 2, label: '2 Children' },
+                { value: 3, label: '3 Children' },
+                { value: 4, label: '4 or more' },
+              ].map(({ value, label }) => (
+                <label key={value} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={(localFilters.numberOfChildren || []).includes(value)}
+                    onChange={() => toggleSelection('numberOfChildren', value)}
+                    className="rounded"
+                  />
+                  <span className="text-sm">{label}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           <div className="col-span-full flex gap-2 justify-end mt-4">
