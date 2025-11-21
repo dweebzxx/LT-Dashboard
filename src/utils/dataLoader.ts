@@ -9,7 +9,7 @@ export const loadCSVData = async (file: File): Promise<SurveyResponse[]> => {
       skipEmptyLines: true,
       complete: (results) => {
         const data = results.data as SurveyResponse[];
-        resolve(data);
+        resolve(data.filter(row => row.finished === 1));
       },
       error: (error) => {
         reject(error);
@@ -19,7 +19,7 @@ export const loadCSVData = async (file: File): Promise<SurveyResponse[]> => {
 };
 
 export const loadDefaultCSV = async (): Promise<SurveyResponse[]> => {
-  const response = await fetch('/data/LT_Survey_Results.csv');
+  const response = await fetch('/data/MASTER_Little_Tikes_Survey.csv');
   const csvText = await response.text();
 
   return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ export const loadDefaultCSV = async (): Promise<SurveyResponse[]> => {
       skipEmptyLines: true,
       complete: (results) => {
         const data = results.data as SurveyResponse[];
-        resolve(data);
+        resolve(data.filter(row => row.finished === 1));
       },
       error: (error) => {
         reject(error);

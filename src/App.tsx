@@ -13,10 +13,9 @@ import { CompetitiveAnalysisSection } from './components/sections/CompetitiveAna
 import { FutureDirectionSection } from './components/sections/FutureDirectionSection';
 import { NPSSection } from './components/sections/NPSSection';
 import { CrossTabAnalysisSection } from './components/sections/CrossTabAnalysisSection';
-import { UnderTheHoodSection } from './components/sections/UnderTheHoodSection';
 
 type TabType = 'overview' | 'demographics' | 'nostalgia' | 'brand' | 'competitive' |
-'future' | 'crosstab' | 'uth';
+'future' | 'crosstab';
 
 function App() {
   const { data, filteredData, setData } = useSurveyStore();
@@ -63,7 +62,7 @@ a.download = `little_tikes_filtered_${new Date().toISOString().split('T')[0]}.cs
   };
 
   const completionRate = data.length > 0 ?
-((data.filter(r => r.finished === undefined || r.finished === 1).length / data.length) * 100).toFixed(1) : '0';
+((data.filter(r => r.finished === 1).length / data.length) * 100).toFixed(1) : '0';
 if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -101,9 +100,9 @@ if (loading) {
     { id: 'nostalgia' as TabType, label: 'Nostalgia & Memory', icon: Heart },
     { id: 'brand' as TabType, label: 'Brand Perception', icon: Award },
     { id: 'competitive' as TabType, label: 'Competitive Analysis', icon: TrendingUp },
-    { id: 'future' as TabType, label: 'Future Directions', icon: Sparkles },
+    { id: 'future' as TabType, label: 'Future Directions', icon: Sparkles 
+},
     { id: 'crosstab' as TabType, label: 'Cross-Tabulation', icon: Grid },
-    { id: 'uth' as TabType, label: 'Under The Hood', icon: Grid },
   ];
 const renderTabContent = () => {
     switch (activeTab) {
@@ -141,8 +140,6 @@ case 'future':
         return <FutureDirectionSection />;
 case 'crosstab':
         return <CrossTabAnalysisSection />;
-case 'uth':
-        return <UnderTheHoodSection />;
 default:
         return null;
     }
@@ -185,7 +182,8 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
 
         <nav className="sticky top-[88px] z-40 bg-white shadow-md border-b-4 border-red-500">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex flex-wrap overflow-x-auto scrollbar-hide">
+   
+         <div className="flex overflow-x-auto scrollbar-hide">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;

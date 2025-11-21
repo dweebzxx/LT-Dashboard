@@ -21,7 +21,6 @@ const defaultFilters: FilterState = {
   npsRange: [1, 5],
   nostalgiaRange: [0, 100],
   hasChildren27: 'all',
-  numberOfChildren: [],
 };
 
 export const useSurveyStore = create<SurveyStore>((set, get) => ({
@@ -74,10 +73,6 @@ export const useSurveyStore = create<SurveyStore>((set, get) => ({
         return false;
       }
       if (filters.hasChildren27 === 'no' && row.children_2_7 !== 0) {
-        return false;
-      }
-
-      if (filters.numberOfChildren.length > 0 && !filters.numberOfChildren.includes(row.number_of_children)) {
         return false;
       }
 
