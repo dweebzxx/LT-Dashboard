@@ -62,7 +62,7 @@ a.download = `little_tikes_filtered_${new Date().toISOString().split('T')[0]}.cs
   };
 
   const completionRate = data.length > 0 ?
-((data.filter(r => r.finished === 1).length / data.length) * 100).toFixed(1) : '0';
+((data.filter(r => r.finished === undefined || r.finished === 1).length / data.length) * 100).toFixed(1) : '0';
 if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
