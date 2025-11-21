@@ -16,6 +16,25 @@ export const CompetitiveAnalysisSection = () => {
    { key: 'q15_lt_rating_vs_competitors_childhood_memories_0_100', name: 'Memories' },
   ];
 
+  const q16Competitors = [
+   { key: 'q16_competitor_brand_rating_fisher_price_1_5', name: 'Fisher-Price' },
+   { key: 'q16_competitor_brand_rating_step2_1_5', name: 'Step2' },
+   { key: 'q16_competitor_brand_rating_melissa_doug_1_5', name: 'Melissa & Doug' },
+   { key: 'q16_competitor_brand_rating_lego_1_5', name: 'LEGO' },
+   { key: 'q16_competitor_brand_rating_tonies_1_5', name: 'Tonies' },
+   { key: 'q16_competitor_brand_rating_lovevery_1_5', name: 'Lovevery' },
+   { key: 'q16_competitor_brand_rating_toynado_1_5', name: 'Toynado' },
+   { key: 'q16_competitor_brand_rating_little_tikes_1_5', name: 'Little Tikes' },
+  ];
+
+  const brandRatings = q16Competitors.map(brand => {
+   const scores = filteredData.map(r => r[brand.key as keyof typeof r] as number);
+   return {
+    name: brand.name,
+    mean: calculateMean(scores),
+   };
+  }).sort((a, b) => b.mean - a.mean);
+
   const competitiveScores = attributes.map(attr => {
    const scores = filteredData.map(r => r[attr.key as keyof typeof r] as number);
    return {
@@ -73,6 +92,7 @@ export const CompetitiveAnalysisSection = () => {
   }));
 
   return {
+   brandRatings,
    competitiveScores,
    radarData,
    strengthStats,
@@ -95,9 +115,22 @@ export const CompetitiveAnalysisSection = () => {
     </div>
    </div>
 
+   <div className="mb-8">
+    <h3 className="text-lg font-semibold text-gray-800 mb-4">Competitor Brand Rating (Q16)</h3>
+    <ResponsiveContainer width="100%" height={300}>
+     <BarChart data={competitiveData.brandRatings} layout="vertical">
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis type="number" domain={[0, 5]} />
+      <YAxis dataKey="name" type="category" width={120} />
+      <Tooltip />
+      <Bar dataKey="mean" fill="#10B981" name="Mean Rating" />
+     </BarChart>
+    </ResponsiveContainer>
+   </div>
+
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Competitive Performance by Attribute</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-4">Competitive Performance by Attribute (Q15)</h3>
      <ResponsiveContainer width="100%" height={300}>
       <BarChart data={competitiveData.competitiveScores}>
        <CartesianGrid strokeDasharray="3 3" />

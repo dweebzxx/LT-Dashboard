@@ -16,6 +16,24 @@ export const AttributeImportanceSection = () => {
    { key: 'q10_rank_attributes_future_6', name: 'Childhood Memories' },
   ];
 
+  const q9Attributes = [
+   { key: 'q9_importance_quality_durability_1_5', name: 'Quality & Durability' },
+   { key: 'q9_importance_safety_trust_1_5', name: 'Safety & Trust' },
+   { key: 'q9_importance_active_imaginative_play_1_5', name: 'Active & Imaginative Play' },
+   { key: 'q9_importance_educational_developmental_1_5', name: 'Educational & Developmental' },
+   { key: 'q9_importance_use_of_technology_1_5', name: 'Use of Technology' },
+   { key: 'q9_importance_childhood_memories_1_5', name: 'Childhood Memories' },
+  ];
+
+  const importanceData = q9Attributes.map(attr => {
+   const scores = filteredData.map(r => r[attr.key as keyof typeof r] as number);
+   const avgScore = calculateMean(scores);
+   return {
+    name: attr.name,
+    avgScore,
+   };
+  }).sort((a, b) => b.avgScore - a.avgScore);
+
   const rankingData = attributes.map(attr => {
    const ranks = filteredData.map(r => r[attr.key as keyof typeof r] as number);
    const avgRank = calculateMean(ranks);
@@ -112,6 +130,7 @@ export const AttributeImportanceSection = () => {
   });
 
   return {
+   importanceData,
    rankingData,
    priorityData,
    radarData,
@@ -124,6 +143,19 @@ export const AttributeImportanceSection = () => {
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
    <h2 className="text-2xl font-bold text-gray-800 mb-6">Attribute Importance & Priority</h2>
+
+   <div className="mb-8">
+    <h3 className="text-xl font-bold text-gray-800 mb-4">Importance of Attributes (Q9)</h3>
+    <ResponsiveContainer width="100%" height={300}>
+     <BarChart data={attributeData.importanceData} layout="vertical">
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis type="number" domain={[0, 5]} />
+      <YAxis dataKey="name" type="category" width={180} />
+      <Tooltip />
+      <Bar dataKey="avgScore" fill="#8B5CF6" name="Average Importance Score" />
+     </BarChart>
+    </ResponsiveContainer>
+   </div>
 
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
     <div>

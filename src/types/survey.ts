@@ -75,6 +75,7 @@ export interface FilterState {
   npsRange: [number, number];
   nostalgiaRange: [number, number];
   hasChildren27: 'all' | 'yes' | 'no';
+  numberOfChildren: number[];
 }
 
 export interface DerivedIndices {
