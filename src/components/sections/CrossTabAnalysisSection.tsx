@@ -32,7 +32,7 @@ const VARIABLES: Variable[] = [
  { key: 'q8_memories_influence_purchase_1_5', label: 'Memory Influence', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
  { key: 'q11_nostalgia_quartile', label: 'Nostalgia Quartile', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
  { key: 'q6_childhood_brand_rank_little_tikes', label: 'LT Childhood Rank', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
- { key: 'q16_competitor_brand_ratings_little_tikes_1_5', label: 'LT Competitor Rating', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'LT Competitor Rating', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
 ];
 
 export const CrossTabAnalysisSection = () => {
@@ -242,6 +242,32 @@ export const CrossTabAnalysisSection = () => {
   navigator.clipboard.writeText(text);
  };
 
+ const renderVariableList = () => (
+    <div className="mt-8 pt-8 border-t border-gray-200">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Variable Definitions & Sources</h3>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left text-gray-500">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th className="px-4 py-2">Variable Label</th>
+              <th className="px-4 py-2">Source Column</th>
+              <th className="px-4 py-2">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {VARIABLES.map((v) => (
+              <tr key={v.key} className="bg-white border-b hover:bg-gray-50">
+                <td className="px-4 py-2 font-medium text-gray-900">{v.label}</td>
+                <td className="px-4 py-2 font-mono text-xs">{v.key}</td>
+                <td className="px-4 py-2 capitalize">{v.type}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
  const predefinedCrossTabs = [
   { row: 'age_group', col: 'q19_nps_little_tikes_1_5', label: 'Age × NPS' },
   { row: 'gender', col: 'q19_nps_little_tikes_1_5', label: 'Gender × NPS' },
@@ -251,7 +277,7 @@ export const CrossTabAnalysisSection = () => {
   { row: 'household_income', col: 'q18_preference_vs_brands_1_3', label: 'Income × Brand Preference' },
   { row: 'q11_nostalgia_quartile', col: 'q19_nps_little_tikes_1_5', label: 'Nostalgia × NPS' },
   { row: 'q8_memories_influence_purchase_1_5', col: 'age_group', label: 'Memory Influence × Age' },
-  { row: 'q6_childhood_brand_rank_little_tikes', col: 'q16_competitor_brand_ratings_little_tikes_1_5', label: 'Childhood Rank × Rating' },
+  { row: 'q6_childhood_brand_rank_little_tikes', col: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'Childhood Rank × Rating' },
  ];
 
  return (
@@ -501,6 +527,7 @@ export const CrossTabAnalysisSection = () => {
      </div>
     </>
    )}
+   {renderVariableList()}
   </section>
  );
 };

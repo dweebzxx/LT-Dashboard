@@ -219,6 +219,23 @@ export const FilterPanel = () => {
             </select>
           </div>
 
+          <div>
+            <label className="block text-sm font-medium mb-2">Number of Children</label>
+            <div className="space-y-1">
+              {[1, 2, 3, 4, 5].map((value) => (
+                <label key={value} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={(localFilters.numberOfChildren || []).includes(value)}
+                    onChange={() => toggleSelection('numberOfChildren', value)}
+                    className="rounded"
+                  />
+                  <span className="text-sm">{value} {value === 5 ? '+' : ''}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
           <div className="col-span-full flex gap-2 justify-end mt-4">
             <button
               onClick={handleReset}

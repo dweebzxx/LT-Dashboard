@@ -121,12 +121,12 @@ export const RankingAnalysisSection = () => {
   const q10Kendall = calculateKendallW(q10Rankings);
 
   const q9Ratings = [
-   filteredData.map(r => r.q9_importance_ratings_quality_durability_1_5),
-   filteredData.map(r => r.q9_importance_ratings_safety_trust_1_5),
-   filteredData.map(r => r.q9_importance_ratings_active_imaginative_play_1_5),
-   filteredData.map(r => r.q9_importance_ratings_educational_developmental_1_5),
-   filteredData.map(r => r.q9_importance_ratings_use_of_technology_1_5),
-   filteredData.map(r => r.q9_importance_ratings_my_childhood_memories_1_5),
+   filteredData.map(r => r.q9_importance_quality_durability_1_5),
+   filteredData.map(r => r.q9_importance_safety_trust_1_5),
+   filteredData.map(r => r.q9_importance_active_imaginative_play_1_5),
+   filteredData.map(r => r.q9_importance_educational_developmental_1_5),
+   filteredData.map(r => r.q9_importance_use_of_technology_1_5),
+   filteredData.map(r => r.q9_importance_childhood_memories_1_5),
   ];
 
   const q10Ranks = [

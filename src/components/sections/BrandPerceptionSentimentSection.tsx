@@ -109,12 +109,12 @@ export const BrandPerceptionSentimentSection = () => {
   );
 
   const q9Items = [
-   { key: 'q9_importance_ratings_quality_durability_1_5', label: 'Quality & Durability' },
-   { key: 'q9_importance_ratings_safety_trust_1_5', label: 'Safety & Trust' },
-   { key: 'q9_importance_ratings_active_imaginative_play_1_5', label: 'Active & Imaginative Play' },
-   { key: 'q9_importance_ratings_educational_developmental_1_5', label: 'Educational & Developmental Value' },
-   { key: 'q9_importance_ratings_use_of_technology_1_5', label: 'Use of Technology' },
-   { key: 'q9_importance_ratings_my_childhood_memories_1_5', label: 'My Childhood Memories' },
+   { key: 'q9_importance_quality_durability_1_5', label: 'Quality & Durability' },
+   { key: 'q9_importance_safety_trust_1_5', label: 'Safety & Trust' },
+   { key: 'q9_importance_active_imaginative_play_1_5', label: 'Active & Imaginative Play' },
+   { key: 'q9_importance_educational_developmental_1_5', label: 'Educational & Developmental Value' },
+   { key: 'q9_importance_use_of_technology_1_5', label: 'Use of Technology' },
+   { key: 'q9_importance_childhood_memories_1_5', label: 'My Childhood Memories' },
   ];
 
   const q9Stats = q9Items.map(item => {
@@ -161,14 +161,14 @@ export const BrandPerceptionSentimentSection = () => {
   const q14Correlations = q14ItemsData.map(item => calculateItemTotalCorrelation(item, q14TotalScores));
 
   const q16Brands = [
-   { key: 'q16_competitor_brand_ratings_fisher_price_1_5', label: 'Fisher-Price' },
-   { key: 'q16_competitor_brand_ratings_step2_1_5', label: 'Step2' },
-   { key: 'q16_competitor_brand_ratings_melissa_doug_1_5', label: 'Melissa & Doug' },
-   { key: 'q16_competitor_brand_ratings_lego_1_5', label: 'LEGO' },
-   { key: 'q16_competitor_brand_ratings_tonies_1_5', label: 'Tonies' },
-   { key: 'q16_competitor_brand_ratings_lovevery_1_5', label: 'Lovevery' },
-   { key: 'q16_competitor_brand_ratings_toynado_1_5', label: 'Toynado' },
-   { key: 'q16_competitor_brand_ratings_little_tikes_1_5', label: 'Little Tikes' },
+   { key: 'q16_competitor_brand_rating_fisher_price_1_5', label: 'Fisher-Price' },
+   { key: 'q16_competitor_brand_rating_step2_1_5', label: 'Step2' },
+   { key: 'q16_competitor_brand_rating_melissa_doug_1_5', label: 'Melissa & Doug' },
+   { key: 'q16_competitor_brand_rating_lego_1_5', label: 'LEGO' },
+   { key: 'q16_competitor_brand_rating_tonies_1_5', label: 'Tonies' },
+   { key: 'q16_competitor_brand_rating_lovevery_1_5', label: 'Lovevery' },
+   { key: 'q16_competitor_brand_rating_toynado_1_5', label: 'Toynado' },
+   { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'Little Tikes' },
   ];
 
   const q16Stats = q16Brands.map(brand => {

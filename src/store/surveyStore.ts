@@ -21,6 +21,7 @@ const defaultFilters: FilterState = {
   npsRange: [1, 5],
   nostalgiaRange: [0, 100],
   hasChildren27: 'all',
+  numberOfChildren: [],
 };
 
 export const useSurveyStore = create<SurveyStore>((set, get) => ({
@@ -74,6 +75,26 @@ export const useSurveyStore = create<SurveyStore>((set, get) => ({
       }
       if (filters.hasChildren27 === 'no' && row.children_2_7 !== 0) {
         return false;
+      }
+
+      if (filters.numberOfChildren && filters.numberOfChildren.length > 0) {
+        const numChildren = row.number_of_children;
+        // If 5 is selected, it should match 5 and above if we assume "5+"
+        // Based on the filter UI, we have 1, 2, 3, 4, 5.
+        // Assuming the data uses exact numbers.
+        // If 5 means 5+, we might need logic. But let's assume exact match for now as per data type.
+        // Wait, looking at filter UI: "5 {value === 5 ? '+' : ''}"
+        if (filters.numberOfChildren.includes(5)) {
+             if (filters.numberOfChildren.includes(numChildren) || numChildren >= 5) {
+                 // allow it
+             } else if (!filters.numberOfChildren.includes(numChildren)) {
+                 return false;
+             }
+        } else {
+             if (!filters.numberOfChildren.includes(numChildren)) {
+                 return false;
+             }
+        }
       }
 
       return true;

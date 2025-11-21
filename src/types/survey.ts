@@ -1,10 +1,5 @@
 export interface SurveyResponse {
   q_id: string;
-  response_id: string;
-  start_date: string;
-  end_date: string;
-  duration_sec: number;
-  finished: number;
   children_2_7: number;
   number_of_children: number;
   age_group: number;
@@ -63,8 +58,6 @@ export interface SurveyResponse {
   q17_future_directions_excitement_1_4: number;
   q18_preference_vs_brands_1_3: number;
   q19_nps_little_tikes_1_5: number;
-  q20_nps_explanation_text: string;
-  pid_prolific_id: string;
 }
 
 export interface FilterState {
@@ -75,6 +68,7 @@ export interface FilterState {
   npsRange: [number, number];
   nostalgiaRange: [number, number];
   hasChildren27: 'all' | 'yes' | 'no';
+  numberOfChildren: number[];
 }
 
 export interface DerivedIndices {

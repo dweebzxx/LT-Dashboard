@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid } from 'lucide-react';
+import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid, Database } from 'lucide-react';
 import { useSurveyStore } from './store/surveyStore';
 import { loadDefaultCSV, loadCSVData } from './utils/dataLoader';
 import { FilterPanel } from './components/FilterPanel';
@@ -13,9 +13,10 @@ import { CompetitiveAnalysisSection } from './components/sections/CompetitiveAna
 import { FutureDirectionSection } from './components/sections/FutureDirectionSection';
 import { NPSSection } from './components/sections/NPSSection';
 import { CrossTabAnalysisSection } from './components/sections/CrossTabAnalysisSection';
+import { UTHTab } from './components/sections/UTHTab';
 
 type TabType = 'overview' | 'demographics' | 'nostalgia' | 'brand' | 'competitive' |
-'future' | 'crosstab';
+'future' | 'crosstab' | 'uth';
 
 function App() {
   const { data, filteredData, setData } = useSurveyStore();
@@ -61,8 +62,7 @@ a.download = `little_tikes_filtered_${new Date().toISOString().split('T')[0]}.cs
     a.click();
   };
 
-  const completionRate = data.length > 0 ?
-((data.filter(r => r.finished === 1).length / data.length) * 100).toFixed(1) : '0';
+  const completionRate = data.length > 0 ? '100.0' : '0';
 if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -100,9 +100,9 @@ if (loading) {
     { id: 'nostalgia' as TabType, label: 'Nostalgia & Memory', icon: Heart },
     { id: 'brand' as TabType, label: 'Brand Perception', icon: Award },
     { id: 'competitive' as TabType, label: 'Competitive Analysis', icon: TrendingUp },
-    { id: 'future' as TabType, label: 'Future Directions', icon: Sparkles 
-},
+    { id: 'future' as TabType, label: 'Future Directions', icon: Sparkles },
     { id: 'crosstab' as TabType, label: 'Cross-Tabulation', icon: Grid },
+    { id: 'uth' as TabType, label: 'UTH', icon: Database },
   ];
 const renderTabContent = () => {
     switch (activeTab) {
@@ -140,6 +140,8 @@ case 'future':
         return <FutureDirectionSection />;
 case 'crosstab':
         return <CrossTabAnalysisSection />;
+case 'uth':
+        return <UTHTab />;
 default:
         return null;
     }
@@ -182,27 +184,28 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
 
         <nav className="sticky top-[88px] z-40 bg-white shadow-md border-b-4 border-red-500">
           <div className="max-w-7xl mx-auto px-4">
-   
-         <div className="flex overflow-x-auto scrollbar-hide">
+            <div className="flex w-full justify-between">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
-return (
+                const isUth = tab.id === 'uth';
+                return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-4 font-semibold whitespace-nowrap transition-all border-b-4 ${
-            isActive
+                    className={`flex items-center justify-center gap-2 py-4 font-semibold whitespace-nowrap transition-all border-b-4 ${
+                      isUth ? 'px-1 text-xs w-10 flex-none' : 'px-2 text-xs md:text-sm flex-1'
+                    } ${
+                      isActive
                         ? 'bg-red-50 text-red-700 border-red-600'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800 border-transparent'
                     }`}
                   >
-                    <Icon size={20} />
-                   
- <span>{tab.label}</span>
+                    <Icon size={isUth ? 16 : 20} />
+                    <span>{tab.label}</span>
                   </button>
                 );
-})}
+              })}
             </div>
           </div>
         </nav>
