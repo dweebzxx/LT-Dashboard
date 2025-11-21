@@ -498,7 +498,7 @@ export const getLabelForValue = (field: string, value: number): string => {
     gender: { 1: 'Male', 2: 'Female', 3: 'Non-binary', 4: 'Prefer not to say' },
     location: { 1: 'Urban', 2: 'Suburban', 3: 'Rural' },
     household_income: { 1: '<$50K', 2: '$50-99K', 3: '$100-149K', 4: '$150K+', 5: 'Prefer not to answer' },
-    number_of_children: { 1: '1 child', 2: '2 children', 3: '3 children', 4: '4+ children', 5: "I don't have kids" },
+    number_of_children: { 1: '1 child', 2: '2 children', 3: '3 children', 4: '4 or more children' },
     q12_little_tikes_represents: {
       1: 'Quality & Durability',
       2: 'Safety & Trust',

@@ -222,7 +222,12 @@ export const FilterPanel = () => {
           <div>
             <label className="block text-sm font-medium mb-2">Number of Children</label>
             <div className="space-y-1">
-              {[1, 2, 3, 4, 5].map((value) => (
+              {[
+                { value: 1, label: '1 child' },
+                { value: 2, label: '2 children' },
+                { value: 3, label: '3 children' },
+                { value: 4, label: '4 or more children' },
+              ].map(({ value, label }) => (
                 <label key={value} className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -230,7 +235,7 @@ export const FilterPanel = () => {
                     onChange={() => toggleSelection('numberOfChildren', value)}
                     className="rounded"
                   />
-                  <span className="text-sm">{value} {value === 5 ? '+' : ''}</span>
+                  <span className="text-sm">{label}</span>
                 </label>
               ))}
             </div>
