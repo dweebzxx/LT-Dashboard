@@ -28,6 +28,7 @@ const VARIABLES: Variable[] = [
  { key: 'location', label: 'Location', type: 'categorical', values: [1, 2, 3], getLabel: (v) => getLabelForValue('location', v) },
  { key: 'household_income', label: 'Household Income', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('household_income', v) },
  { key: 'number_of_children', label: 'Number of Children', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('number_of_children', v) },
+ { key: 'children_2_7', label: 'Has Children Age 2-7', type: 'categorical', values: [0, 1], getLabel: (v) => v === 1 ? 'Yes' : 'No' },
  { key: 'q19_nps_little_tikes_1_5', label: 'NPS Score (Q19)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Score ${v}` },
  { key: 'nps_category', label: 'NPS Category (Q19)', type: 'categorical', values: [1, 2, 3], getLabel: (v) => ['Detractor', 'Passive', 'Promoter'][v - 1] },
  { key: 'q18_preference_vs_brands_1_3', label: 'Brand Preference (Q18)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => getLabelForValue('q18_preference_vs_brands_1_3', v) },
@@ -36,7 +37,29 @@ const VARIABLES: Variable[] = [
  { key: 'q11_nostalgia_quartile', label: 'Nostalgia Quartile', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['Q1 (0-25)', 'Q2 (26-50)', 'Q3 (51-75)', 'Q4 (76-100)'][v - 1] },
  { key: 'q11_nostalgia_little_tikes_0_100', label: 'Nostalgia Intensity (Q11: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
  { key: 'q6_childhood_brand_rank_little_tikes', label: 'LT Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
- { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'LT Competitor Rating', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q6_childhood_brand_rank_fisher_price', label: 'Fisher-Price Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q6_childhood_brand_rank_playskool', label: 'Playskool Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q6_childhood_brand_rank_toynado', label: 'Toynado Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q6_childhood_brand_rank_lego', label: 'LEGO Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q6_childhood_brand_rank_other', label: 'Other Brand Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q7_memories_childhood_toys_vivid_memories_1_5', label: 'Vivid Toy Memories (Q7a)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'q7_memories_childhood_toys_reminds_childhood_1_5', label: 'Toys Remind of Childhood (Q7b)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'q7_memories_childhood_toys_want_child_experience_1_5', label: 'Want Child to Experience Toys (Q7c)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'q7_memories_childhood_toys_not_relevant_today_1_5', label: 'Toys Not Relevant Today (Q7d)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'q10_rank_attributes_future_1', label: 'Quality/Durability Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q10_rank_attributes_future_2', label: 'Safety/Trust Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q10_rank_attributes_future_3', label: 'Active/Imaginative Play Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q10_rank_attributes_future_4', label: 'Educational/Developmental Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q10_rank_attributes_future_5', label: 'Tech Use Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q10_rank_attributes_future_6', label: 'Childhood Memories Future Rank (Q10)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q16_competitor_brand_rating_fisher_price_1_5', label: 'Fisher-Price Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_step2_1_5', label: 'Step2 Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_melissa_doug_1_5', label: 'Melissa & Doug Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_lego_1_5', label: 'LEGO Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_tonies_1_5', label: 'Tonies Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_lovevery_1_5', label: 'Lovevery Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_toynado_1_5', label: 'Toynado Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'LT Competitor Rating (Q16)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
  { key: 'q12_little_tikes_represents', label: 'Brand Perception (Q12)', type: 'categorical', values: [1, 2, 3, 4, 5], getLabel: (v) => getLabelForValue('q12_little_tikes_represents', v) },
  { key: 'q17_future_directions_excitement_1_4', label: 'Future Direction Preference (Q17)', type: 'categorical', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('q17_future_directions_excitement_1_4', v) },
  { key: 'q13_emotional_impact_makes_nostalgic_1_5', label: 'Nostalgia Feel (Q13a)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
@@ -65,11 +88,18 @@ const VARIABLES: Variable[] = [
  { key: 'tech_importance_binned', label: 'Tech Importance - Binned (Q9e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
  { key: 'q9_importance_childhood_memories_1_5', label: 'Childhood Memories Importance (Q9f)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
  { key: 'memories_importance_binned', label: 'Childhood Memories Importance - Binned (Q9f)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
- { key: 'lt_durability_binned', label: 'LT Durability Rating (Q15a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
- { key: 'lt_safety_binned', label: 'LT Safety Rating (Q15b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
- { key: 'lt_imaginative_play_binned', label: 'LT Imaginative Play Rating (Q15c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
- { key: 'lt_educational_binned', label: 'LT Educational Rating (Q15d)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
- { key: 'lt_tech_binned', label: 'LT Tech Rating (Q15e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15a_quartile', label: 'LT Durability Rating Quartile (Q15a: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_durability_binned', label: 'LT Durability Rating - Binned (Q15a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15b_quartile', label: 'LT Safety Rating Quartile (Q15b: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_safety_binned', label: 'LT Safety Rating - Binned (Q15b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15c_quartile', label: 'LT Imaginative Play Rating Quartile (Q15c: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_imaginative_play_binned', label: 'LT Imaginative Play Rating - Binned (Q15c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15d_quartile', label: 'LT Educational Rating Quartile (Q15d: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_educational_binned', label: 'LT Educational Rating - Binned (Q15d)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15e_quartile', label: 'LT Tech Rating Quartile (Q15e: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_tech_binned', label: 'LT Tech Rating - Binned (Q15e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q15f_quartile', label: 'LT Childhood Memories Rating Quartile (Q15f: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'lt_childhood_memories_binned', label: 'LT Childhood Memories Rating - Binned (Q15f)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
  { key: 'primary_platform', label: 'Primary Parenting Platform (Q5)', type: 'categorical', values: [1, 2, 3, 4, 5, 6, 7], getLabel: (v) => ['Instagram', 'TikTok', 'Facebook', 'YouTube', 'Blogs/Websites', 'Texts/Group Chats', 'Other'][v - 1] },
 ];
 
@@ -92,6 +122,13 @@ export const CrossTabAnalysisSection = () => {
     if (val <= 50) return 1;
     if (val <= 75) return 2;
     return 3;
+   };
+
+   const quartile0to100 = (val: number) => {
+    if (val <= 25) return 1;
+    if (val <= 50) return 2;
+    if (val <= 75) return 3;
+    return 4;
    };
 
    const nostalgia = row.q11_nostalgia_little_tikes_0_100;
@@ -135,11 +172,18 @@ export const CrossTabAnalysisSection = () => {
     educational_importance_binned: binLikert(row.q9_importance_educational_developmental_1_5),
     tech_importance_binned: binLikert(row.q9_importance_use_of_technology_1_5),
     memories_importance_binned: binLikert(row.q9_importance_childhood_memories_1_5),
+    q15a_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_quality_durability_0_100),
+    q15b_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_safety_trust_0_100),
+    q15c_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_active_imaginative_play_0_100),
+    q15d_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_educational_developmental_0_100),
+    q15e_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_use_of_technology_0_100),
+    q15f_quartile: quartile0to100(row.q15_lt_rating_vs_competitors_childhood_memories_0_100),
     lt_durability_binned: bin0to100(row.q15_lt_rating_vs_competitors_quality_durability_0_100),
     lt_safety_binned: bin0to100(row.q15_lt_rating_vs_competitors_safety_trust_0_100),
     lt_imaginative_play_binned: bin0to100(row.q15_lt_rating_vs_competitors_active_imaginative_play_0_100),
     lt_educational_binned: bin0to100(row.q15_lt_rating_vs_competitors_educational_developmental_0_100),
     lt_tech_binned: bin0to100(row.q15_lt_rating_vs_competitors_use_of_technology_0_100),
+    lt_childhood_memories_binned: bin0to100(row.q15_lt_rating_vs_competitors_childhood_memories_0_100),
    };
   });
  }, [filteredData]);
