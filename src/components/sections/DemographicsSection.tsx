@@ -283,7 +283,7 @@ export const DemographicsSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <div className="flex items-center justify-between mb-6">
+   <div className="flex items-center justify-between mb-2">
     <h2 className="text-2xl font-bold text-gray-800">Demographics Analysis</h2>
     <button
      onClick={exportDemographicsCSV}
@@ -293,6 +293,7 @@ export const DemographicsSection = () => {
      Export Demographics CSV
     </button>
    </div>
+   <p className="text-sm text-gray-600 mb-6">Screening Questions: Age Group, Gender, Location, Household Income, Number of Children</p>
 
    {hasActiveFilters && (
     <div className="mb-6 bg-blue-50 border border-blue-200 rounded p-4">

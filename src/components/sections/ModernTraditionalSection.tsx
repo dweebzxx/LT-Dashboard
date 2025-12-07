@@ -106,7 +106,8 @@ export const ModernTraditionalSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Modern vs Traditional Perception</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Modern vs Traditional Perception</h2>
+   <p className="text-sm text-gray-600 mb-6">Question Q14: Brand perception (Modern/Tech/Traditional/Trendy, 1-5 scale)</p>
 
    <div className="mb-6 bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-lg">
     <div className="text-center">

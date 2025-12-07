@@ -123,7 +123,8 @@ export const AttributeImportanceSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Attribute Importance & Priority</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Attribute Importance & Priority</h2>
+   <p className="text-sm text-gray-600 mb-6">Questions: Q9 (Importance Ratings 1-5), Q10 (Ranking Future Priorities), Q15 (LT Ratings vs Competitors 0-100)</p>
 
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
     <div>

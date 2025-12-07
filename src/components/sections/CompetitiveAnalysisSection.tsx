@@ -84,7 +84,8 @@ export const CompetitiveAnalysisSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Competitive Analysis</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Competitive Analysis</h2>
+   <p className="text-sm text-gray-600 mb-6">Questions: Q15 (LT Ratings vs Competitors 0-100), Q16 (Competitor Brand Ratings 1-5), Q18 (Brand Preference)</p>
 
    <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-lg">
     <div className="text-center">

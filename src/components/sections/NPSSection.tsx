@@ -102,7 +102,8 @@ export const NPSSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Net Promoter Score (NPS) Analysis</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Net Promoter Score (NPS) Analysis</h2>
+   <p className="text-sm text-gray-600 mb-6">Survey Question Q19: "How likely are you to recommend Little Tikes to others?" (1-5 scale)</p>
 
    <div className="mb-6 bg-gradient-to-r from-blue-50 via-green-50 to-emerald-50 p-6 rounded-lg">
     <div className="text-center">
@@ -183,7 +184,8 @@ export const NPSSection = () => {
     </div>
 
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">NPS by Nostalgia Level</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">NPS by Nostalgia Level</h3>
+     <p className="text-xs text-gray-500 mb-3">Q19 (NPS) segmented by Q11 (Nostalgia 0-100)</p>
      <ResponsiveContainer width="100%" height={300}>
       <BarChart data={npsData.npsByNostalgia}>
        <CartesianGrid strokeDasharray="3 3" />
@@ -196,7 +198,8 @@ export const NPSSection = () => {
     </div>
 
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Purchase Intent by NPS</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Purchase Intent by NPS</h3>
+     <p className="text-xs text-gray-500 mb-3">Q8 (Memory Influence on Purchase) by Q19 (NPS)</p>
      <ResponsiveContainer width="100%" height={300}>
       <LineChart data={npsData.avgPurchaseByNPS}>
        <CartesianGrid strokeDasharray="3 3" />

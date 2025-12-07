@@ -80,11 +80,13 @@ export const NostalgiaSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Nostalgia Analysis</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Nostalgia Analysis</h2>
+   <p className="text-sm text-gray-600 mb-6">Primary Questions: Q7 (Memory Impact), Q8 (Purchase Influence), Q11 (Nostalgia 0-100)</p>
 
    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
     <div className="bg-blue-50 p-4 rounded">
-     <h3 className="text-lg font-semibold text-gray-800 mb-3">Nostalgia Score (0-100)</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Nostalgia Score (0-100)</h3>
+     <p className="text-xs text-gray-500 mb-2">Q11: "Rate your nostalgia for Little Tikes"</p>
      <div className="space-y-2">
       <div className="flex justify-between">
        <span className="text-gray-600">Mean:</span>
@@ -102,7 +104,8 @@ export const NostalgiaSection = () => {
     </div>
 
     <div className="bg-green-50 p-4 rounded">
-     <h3 className="text-lg font-semibold text-gray-800 mb-3">Nostalgia Intensity Index</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Nostalgia Intensity Index</h3>
+     <p className="text-xs text-gray-500 mb-2">Composite: Q7 + Q11 + Q13a</p>
      <div className="space-y-2">
       <div className="flex justify-between">
        <span className="text-gray-600">Mean:</span>
@@ -122,7 +125,8 @@ export const NostalgiaSection = () => {
 
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Memory Impact Distribution (Q7)</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Memory Impact Distribution (Q7)</h3>
+     <p className="text-xs text-gray-500 mb-3">Q7: Childhood toy memories (1-5 scale)</p>
      <ResponsiveContainer width="100%" height={300}>
       <BarChart data={nostalgiaData.distributionData}>
        <CartesianGrid strokeDasharray="3 3" />
@@ -135,7 +139,8 @@ export const NostalgiaSection = () => {
     </div>
 
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Nostalgia by Age Group</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Nostalgia by Age Group</h3>
+     <p className="text-xs text-gray-500 mb-3">Q11 (Nostalgia) segmented by Age Group</p>
      <ResponsiveContainer width="100%" height={300}>
       <LineChart data={nostalgiaData.nostalgiaByAge}>
        <CartesianGrid strokeDasharray="3 3" />
@@ -149,7 +154,8 @@ export const NostalgiaSection = () => {
     </div>
 
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Purchase Influence Statistics</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Purchase Influence Statistics</h3>
+     <p className="text-xs text-gray-500 mb-3">Q8: "Childhood memories influence purchases"</p>
      <div className="bg-gray-50 p-4 rounded h-[300px] flex flex-col justify-center">
       <div className="space-y-4">
        <div className="flex justify-between items-center">
@@ -169,7 +175,8 @@ export const NostalgiaSection = () => {
     </div>
 
     <div>
-     <h3 className="text-lg font-semibold text-gray-800 mb-4">Nostalgia vs Purchase Intent</h3>
+     <h3 className="text-lg font-semibold text-gray-800 mb-1">Nostalgia vs Purchase Intent</h3>
+     <p className="text-xs text-gray-500 mb-3">Q11 (Nostalgia) vs Q8 (Purchase Influence)</p>
      <ResponsiveContainer width="100%" height={300}>
       <ScatterChart>
        <CartesianGrid strokeDasharray="3 3" />

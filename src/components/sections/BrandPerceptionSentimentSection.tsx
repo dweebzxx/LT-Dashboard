@@ -416,7 +416,7 @@ export const BrandPerceptionSentimentSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <div className="flex items-center justify-between mb-6">
+   <div className="flex items-center justify-between mb-2">
     <h2 className="text-2xl font-bold text-gray-800">Brand Perception & Sentiment Analysis</h2>
     <button
      onClick={exportPerceptionCSV}
@@ -426,6 +426,7 @@ export const BrandPerceptionSentimentSection = () => {
      Export Perception & Sentiment CSV
     </button>
    </div>
+   <p className="text-sm text-gray-600 mb-6">Questions: Q7 (Childhood Memories), Q12 (Brand Representation), Q13 (Emotional Impact), Q14 (Modern/Traditional Perception)</p>
 
    <div className="space-y-10">
     <div>

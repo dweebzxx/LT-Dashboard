@@ -273,7 +273,7 @@ export const RankingAnalysisSection = () => {
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <div className="flex items-center justify-between mb-6">
+   <div className="flex items-center justify-between mb-2">
     <h2 className="text-2xl font-bold text-gray-800">Ranking & Preference Analysis</h2>
     <button
      onClick={exportRankingData}
@@ -283,6 +283,7 @@ export const RankingAnalysisSection = () => {
      Export Ranking Data
     </button>
    </div>
+   <p className="text-sm text-gray-600 mb-6">Questions: Q6 (Childhood Brand Rankings), Q10 (Future Attribute Rankings), Q16 (Brand Ratings 1-5), Q18 (Brand Preference)</p>
 
    <div className="space-y-10">
     <div>

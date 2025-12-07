@@ -27,12 +27,22 @@ const VARIABLES: Variable[] = [
  { key: 'gender', label: 'Gender', type: 'categorical', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('gender', v) },
  { key: 'location', label: 'Location', type: 'categorical', values: [1, 2, 3], getLabel: (v) => getLabelForValue('location', v) },
  { key: 'household_income', label: 'Household Income', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('household_income', v) },
+ { key: 'number_of_children', label: 'Number of Children', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('number_of_children', v) },
  { key: 'q19_nps_little_tikes_1_5', label: 'NPS Score', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Score ${v}` },
  { key: 'q18_preference_vs_brands_1_3', label: 'Brand Preference', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => getLabelForValue('q18_preference_vs_brands_1_3', v) },
- { key: 'q8_memories_influence_purchase_1_5', label: 'Memory Influence', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
- { key: 'q11_nostalgia_quartile', label: 'Nostalgia Quartile', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
+ { key: 'q8_memories_influence_purchase_1_5', label: 'Memory Influence (Q8)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'memory_influence_binned', label: 'Memory Influence - Binned', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not at All (1)', 'Slightly-Moderately (2-3)', 'Very-Extremely (4-5)'][v - 1] },
+ { key: 'q11_nostalgia_quartile', label: 'Nostalgia Quartile', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['Q1 (0-25)', 'Q2 (26-50)', 'Q3 (51-75)', 'Q4 (76-100)'][v - 1] },
+ { key: 'q11_nostalgia_little_tikes_0_100', label: 'Nostalgia Intensity (Q11: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
  { key: 'q6_childhood_brand_rank_little_tikes', label: 'LT Childhood Rank', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
  { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'LT Competitor Rating', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
+ { key: 'modernness_binned', label: 'Modernness Perception (Q14a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Strongly Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'imaginative_play_importance_binned', label: 'Imaginative Play Importance (Q9c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderately Important (3)', 'Very-Extremely Important (4-5)'][v - 1] },
+ { key: 'lt_imaginative_play_binned', label: 'LT Imaginative Play Rating (Q15c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'q12_little_tikes_represents', label: 'Brand Perception (Q12)', type: 'categorical', values: [1, 2, 3, 4, 5], getLabel: (v) => getLabelForValue('q12_little_tikes_represents', v) },
+ { key: 'tech_innovation_binned', label: 'Tech Innovation Appetite (Q14b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Strongly Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'tech_importance_binned', label: 'Tech Importance (Q9e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderately Important (3)', 'Very-Extremely Important (4-5)'][v - 1] },
+ { key: 'lt_durability_binned', label: 'LT Durability Rating (Q15a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
 ];
 
 export const CrossTabAnalysisSection = () => {
@@ -50,9 +60,51 @@ export const CrossTabAnalysisSection = () => {
    else if (nostalgia > 50) quartile = 3;
    else if (nostalgia > 25) quartile = 2;
 
+   const memoryInfluence = row.q8_memories_influence_purchase_1_5;
+   let memoryInfluenceBinned = 1;
+   if (memoryInfluence >= 4) memoryInfluenceBinned = 3;
+   else if (memoryInfluence === 3 || memoryInfluence === 2) memoryInfluenceBinned = 2;
+
+   const modernness = row.q14_perception_brand_feels_modern_1_5;
+   let modernnessBinned = 2;
+   if (modernness <= 2) modernnessBinned = 1;
+   else if (modernness >= 4) modernnessBinned = 3;
+
+   const imaginativePlayImportance = row.q9_importance_active_imaginative_play_1_5;
+   let imaginativePlayImportanceBinned = 2;
+   if (imaginativePlayImportance <= 2) imaginativePlayImportanceBinned = 1;
+   else if (imaginativePlayImportance >= 4) imaginativePlayImportanceBinned = 3;
+
+   const ltImaginativePlay = row.q15_lt_rating_vs_competitors_active_imaginative_play_0_100;
+   let ltImaginativePlayBinned = 1;
+   if (ltImaginativePlay > 75) ltImaginativePlayBinned = 3;
+   else if (ltImaginativePlay > 50) ltImaginativePlayBinned = 2;
+
+   const techInnovation = row.q14_perception_brand_incorporate_technology_1_5;
+   let techInnovationBinned = 2;
+   if (techInnovation <= 2) techInnovationBinned = 1;
+   else if (techInnovation >= 4) techInnovationBinned = 3;
+
+   const techImportance = row.q9_importance_use_of_technology_1_5;
+   let techImportanceBinned = 2;
+   if (techImportance <= 2) techImportanceBinned = 1;
+   else if (techImportance >= 4) techImportanceBinned = 3;
+
+   const ltDurability = row.q15_lt_rating_vs_competitors_quality_durability_0_100;
+   let ltDurabilityBinned = 1;
+   if (ltDurability > 75) ltDurabilityBinned = 3;
+   else if (ltDurability > 50) ltDurabilityBinned = 2;
+
    return {
     ...row,
     q11_nostalgia_quartile: quartile,
+    memory_influence_binned: memoryInfluenceBinned,
+    modernness_binned: modernnessBinned,
+    imaginative_play_importance_binned: imaginativePlayImportanceBinned,
+    lt_imaginative_play_binned: ltImaginativePlayBinned,
+    tech_innovation_binned: techInnovationBinned,
+    tech_importance_binned: techImportanceBinned,
+    lt_durability_binned: ltDurabilityBinned,
    };
   });
  }, [filteredData]);
@@ -273,16 +325,23 @@ export const CrossTabAnalysisSection = () => {
   { row: 'gender', col: 'q19_nps_little_tikes_1_5', label: 'Gender × NPS' },
   { row: 'household_income', col: 'q19_nps_little_tikes_1_5', label: 'Income × NPS' },
   { row: 'location', col: 'q19_nps_little_tikes_1_5', label: 'Location × NPS' },
+  { row: 'number_of_children', col: 'q19_nps_little_tikes_1_5', label: 'Number of Children × NPS' },
   { row: 'age_group', col: 'q18_preference_vs_brands_1_3', label: 'Age × Brand Preference' },
   { row: 'household_income', col: 'q18_preference_vs_brands_1_3', label: 'Income × Brand Preference' },
   { row: 'q11_nostalgia_quartile', col: 'q19_nps_little_tikes_1_5', label: 'Nostalgia × NPS' },
-  { row: 'q8_memories_influence_purchase_1_5', col: 'age_group', label: 'Memory Influence × Age' },
-  { row: 'q6_childhood_brand_rank_little_tikes', col: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'Childhood Rank × Rating' },
+  { row: 'memory_influence_binned', col: 'age_group', label: 'Memory Influence × Age' },
+  { row: 'imaginative_play_importance_binned', col: 'q19_nps_little_tikes_1_5', label: 'Imaginative Play × NPS' },
+  { row: 'modernness_binned', col: 'age_group', label: 'Modernness × Age' },
+  { row: 'tech_innovation_binned', col: 'tech_importance_binned', label: 'Tech Innovation × Tech Importance' },
+  { row: 'q12_little_tikes_represents', col: 'q19_nps_little_tikes_1_5', label: 'Brand Perception × NPS' },
+  { row: 'lt_durability_binned', col: 'q18_preference_vs_brands_1_3', label: 'Durability × Brand Preference' },
+  { row: 'lt_imaginative_play_binned', col: 'imaginative_play_importance_binned', label: 'LT Imag. Play Rating × Importance' },
  ];
 
  return (
   <section className="bg-white shadow-lg rounded-lg p-6">
-   <h2 className="text-2xl font-bold text-gray-800 mb-6">Cross-Tabulation Analysis Engine</h2>
+   <h2 className="text-2xl font-bold text-gray-800 mb-2">Cross-Tabulation Analysis Engine</h2>
+   <p className="text-sm text-gray-600 mb-6">Interactive cross-tabulation of any two survey variables with Chi-Square and Spearman correlation analysis</p>
 
    <div className="bg-gray-50 p-6 rounded-lg mb-6">
     <h3 className="text-lg font-semibold text-gray-800 mb-4">Cross-Tab Builder</h3>
