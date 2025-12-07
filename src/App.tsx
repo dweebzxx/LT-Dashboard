@@ -1,8 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
-import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid, Database, FileText } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid, Database } from 'lucide-react';
 import { useSurveyStore } from './store/surveyStore';
 import { loadDefaultCSV, loadCSVData } from './utils/dataLoader';
-import { exportToPDF } from './utils/pdfExport';
 import { FilterPanel } from './components/FilterPanel';
 import { DemographicsSection } from './components/sections/DemographicsSection';
 import { NostalgiaSection } from './components/sections/NostalgiaSection';
@@ -24,8 +23,6 @@ function App() {
 const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const [exportingPDF, setExportingPDF] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
 useEffect(() => {
     loadDefaultCSV()
       .then((csvData) => {
@@ -63,25 +60,6 @@ const blob = new Blob([csv], { type: 'text/csv' });
     a.href = url;
 a.download = `little_tikes_filtered_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
-  };
-
-  const handleExportPDF = async () => {
-    if (!contentRef.current || exportingPDF) return;
-
-    setExportingPDF(true);
-    try {
-      const tabLabel = tabs.find(t => t.id === activeTab)?.label || 'Dashboard';
-      await exportToPDF(contentRef.current, {
-        tabName: tabLabel,
-        n: filteredData.length,
-        total: data.length,
-      });
-    } catch (error) {
-      console.error('Failed to export PDF:', error);
-      alert('Failed to generate PDF. Please try again.');
-    } finally {
-      setExportingPDF(false);
-    }
   };
 
   const completionRate = data.length > 0 ? '100.0' : '0';
@@ -187,30 +165,17 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
               </div>
               <div className="flex items-center gap-2">
                 <label className="cursor-pointer p-2 hover:bg-white/20 rounded-lg transition-colors">
-
+                  
 <Upload size={20} className="text-white" />
                   <input type="file" accept=".csv" onChange={handleFileUpload} className="hidden" />
                 </label>
                 <button
                   onClick={handleExportCSV}
                   disabled={filteredData.length === 0}
-
+    
               className="p-2 hover:bg-white/20 rounded-lg disabled:opacity-50 transition-colors"
-                  title="Export CSV"
                 >
                   <Download size={20} className="text-white" />
-                </button>
-                <button
-                  onClick={handleExportPDF}
-                  disabled={filteredData.length === 0 || exportingPDF}
-                  className="p-2 hover:bg-white/20 rounded-lg disabled:opacity-50 transition-colors relative"
-                  title="Export PDF"
-                >
-                  {exportingPDF ? (
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                  ) : (
-                    <FileText size={20} className="text-white" />
-                  )}
                 </button>
               </div>
             </div>
@@ -248,7 +213,7 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
 
         <main className="max-w-7xl mx-auto px-4 py-6">
           <FilterPanel />
-          <div ref={contentRef} className="mt-6">
+          <div className="mt-6">
             {renderTabContent()}
           </div>
         </main>
