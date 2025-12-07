@@ -21,16 +21,16 @@ export const exportTabToPDF = async (
 
   try {
     const pdf = new jsPDF({
-      orientation: 'landscape',
+      orientation: 'portrait',
       unit: 'mm',
       format: 'a4',
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 10;
+    const margin = 15;
     const contentWidth = pageWidth - 2 * margin;
-    const contentHeight = pageHeight - 2 * margin - 20;
+    const contentHeight = pageHeight - 2 * margin - 25;
 
     const timestamp = new Date().toLocaleString('en-US', {
       year: 'numeric',
@@ -40,18 +40,34 @@ export const exportTabToPDF = async (
       minute: '2-digit',
     });
 
+    const noPdfElements = element.querySelectorAll('.no-pdf-export');
+    const originalDisplays: string[] = [];
+
+    noPdfElements.forEach((el, idx) => {
+      const htmlEl = el as HTMLElement;
+      originalDisplays[idx] = htmlEl.style.display;
+      htmlEl.style.display = 'none';
+    });
+
     const canvas = await html2canvas(element, {
       useCORS: true,
       logging: false,
       backgroundColor: '#ffffff',
       windowWidth: element.scrollWidth,
       windowHeight: element.scrollHeight,
+      scale: 2,
     } as any);
+
+    noPdfElements.forEach((el, idx) => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.style.display = originalDisplays[idx];
+    });
 
     const imgData = canvas.toDataURL('image/png');
     const imgWidth = contentWidth;
     const imgHeight = (canvas.height * contentWidth) / canvas.width;
 
+    const sections = detectSections(element);
     const totalPages = Math.ceil(imgHeight / contentHeight);
 
     for (let page = 0; page < totalPages; page++) {
@@ -85,7 +101,7 @@ export const exportTabToPDF = async (
         imgData,
         'PNG',
         margin,
-        margin + 20 + yOffset,
+        margin + 25 + yOffset,
         imgWidth,
         imgHeight,
         undefined,
@@ -112,6 +128,34 @@ export const exportTabToPDF = async (
     throw error;
   }
 };
+
+function detectSections(element: HTMLElement): Array<{ top: number; height: number; type: string }> {
+  const sections: Array<{ top: number; height: number; type: string }> = [];
+
+  const tables = element.querySelectorAll('table');
+  tables.forEach((table) => {
+    const rect = table.getBoundingClientRect();
+    const containerRect = element.getBoundingClientRect();
+    sections.push({
+      top: rect.top - containerRect.top,
+      height: rect.height,
+      type: 'table',
+    });
+  });
+
+  const charts = element.querySelectorAll('.recharts-wrapper, .recharts-responsive-container');
+  charts.forEach((chart) => {
+    const rect = chart.getBoundingClientRect();
+    const containerRect = element.getBoundingClientRect();
+    sections.push({
+      top: rect.top - containerRect.top,
+      height: rect.height,
+      type: 'chart',
+    });
+  });
+
+  return sections.sort((a, b) => a.top - b.top);
+}
 
 export const getFilterInfoText = (
   filteredCount: number,

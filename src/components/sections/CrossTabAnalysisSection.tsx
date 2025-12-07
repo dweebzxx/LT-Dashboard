@@ -308,14 +308,27 @@ export const CrossTabAnalysisSection = () => {
 
   const { rowVariable, colVariable, chiSquareResult, cramersV, spearmanResult } = crossTabData;
   const sigLevel = chiSquareResult.pValue < 0.001 ? '***' : chiSquareResult.pValue < 0.01 ? '**' : chiSquareResult.pValue < 0.05 ? '*' : '';
-  const isSignificant = chiSquareResult.pValue < 0.05;
+  const isSignificant = chiSquareResult.pValue <= 0.05;
+
+  const getVStrength = (v: number): string => {
+    if (v < 0.10) return 'negligible';
+    if (v >= 0.10 && v < 0.20) return 'weak';
+    if (v >= 0.20 && v <= 0.40) return 'moderate';
+    return 'strong';
+  };
 
   let summary = `There is ${isSignificant ? 'a statistically significant' : 'no statistically significant'} association between ${rowVariable.label} and ${colVariable.label} `;
   summary += `(χ²=${chiSquareResult.chiSquare.toFixed(2)}, df=${chiSquareResult.df}, p=${chiSquareResult.pValue.toFixed(4)}${sigLevel}, V=${cramersV.toFixed(2)}). `;
-  summary += `The effect size is ${getCramersVInterpretation(cramersV).toLowerCase()}`;
+  summary += `The effect size is ${getVStrength(cramersV)}`;
 
   if (spearmanResult) {
-   summary += `, with ${getSpearmanInterpretation(spearmanResult.rho).toLowerCase()} (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
+   const rhoSignificant = spearmanResult.pValue <= 0.05;
+   const direction = spearmanResult.rho > 0 ? 'positive' : 'negative';
+   if (rhoSignificant) {
+    summary += `, with a statistically significant ${direction} association (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
+   } else {
+    summary += `, with no statistically significant ordinal association (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
+   }
   }
 
   summary += '.';
@@ -518,7 +531,7 @@ export const CrossTabAnalysisSection = () => {
      </button>
     </div>
 
-    <div className="mt-4">
+    <div className="mt-4 no-pdf-export">
      <div className="text-sm font-medium text-gray-700 mb-2">Quick Select Pre-Defined:</div>
      <div className="flex flex-wrap gap-2">
       {predefinedCrossTabs.map((preset, idx) => (
