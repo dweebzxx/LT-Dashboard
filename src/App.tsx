@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid, Database } from 'lucide-react';
+import { Upload, Download, BarChart3, Users, Heart, Award, TrendingUp, Sparkles, Grid, Database, FileDown } from 'lucide-react';
 import { useSurveyStore } from './store/surveyStore';
 import { loadDefaultCSV, loadCSVData } from './utils/dataLoader';
+import { exportTabToPDF, getFilterInfoText } from './utils/pdfExport';
 import { FilterPanel } from './components/FilterPanel';
 import { DemographicsSection } from './components/sections/DemographicsSection';
 import { NostalgiaSection } from './components/sections/NostalgiaSection';
@@ -19,10 +20,11 @@ type TabType = 'overview' | 'demographics' | 'nostalgia' | 'brand' | 'competitiv
 'future' | 'crosstab' | 'uth';
 
 function App() {
-  const { data, filteredData, setData } = useSurveyStore();
+  const { data, filteredData, setData, filters } = useSurveyStore();
 const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [exportingPDF, setExportingPDF] = useState(false);
 useEffect(() => {
     loadDefaultCSV()
       .then((csvData) => {
@@ -60,6 +62,32 @@ const blob = new Blob([csv], { type: 'text/csv' });
     a.href = url;
 a.download = `little_tikes_filtered_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
+  };
+
+  const handleExportPDF = async () => {
+    setExportingPDF(true);
+    try {
+      const currentTabLabel = tabs.find(t => t.id === activeTab)?.label || activeTab;
+      const hasActiveFilters =
+        filters.ageGroups.length > 0 ||
+        filters.genders.length > 0 ||
+        filters.locations.length > 0 ||
+        filters.incomes.length > 0 ||
+        filters.hasChildren27 !== 'all';
+
+      const filterInfo = getFilterInfoText(filteredData.length, data.length, hasActiveFilters);
+
+      await exportTabToPDF('tab-content', {
+        tabName: currentTabLabel,
+        filterInfo,
+        includeTimestamp: true,
+      });
+    } catch (error) {
+      console.error('Failed to export PDF:', error);
+      alert('Failed to export PDF. Please try again.');
+    } finally {
+      setExportingPDF(false);
+    }
   };
 
   const completionRate = data.length > 0 ? '100.0' : '0';
@@ -213,7 +241,19 @@ className="text-2xl md:text-3xl font-bold text-white drop-shadow-md">
 
         <main className="max-w-7xl mx-auto px-4 py-6">
           <FilterPanel />
-          <div className="mt-6">
+
+          <div className="mt-6 mb-4 flex justify-end">
+            <button
+              onClick={handleExportPDF}
+              disabled={exportingPDF || filteredData.length === 0}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+            >
+              <FileDown size={18} />
+              {exportingPDF ? 'Generating PDF...' : 'Export Tab to PDF'}
+            </button>
+          </div>
+
+          <div id="tab-content" className="mt-2">
             {renderTabContent()}
           </div>
         </main>
