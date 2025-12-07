@@ -306,7 +306,7 @@ export const CrossTabAnalysisSection = () => {
  const generateSummary = (): string => {
   if (!crossTabData) return '';
 
-  const { rowVariable, colVariable, chiSquareResult, cramersV, spearmanResult } = crossTabData;
+  const { rowVariable, colVariable, chiSquareResult, cramersV, spearmanResult, hasExpectedWarning } = crossTabData;
   const sigLevel = chiSquareResult.pValue < 0.001 ? '***' : chiSquareResult.pValue < 0.01 ? '**' : chiSquareResult.pValue < 0.05 ? '*' : '';
   const isSignificant = chiSquareResult.pValue <= 0.05;
 
@@ -317,6 +317,13 @@ export const CrossTabAnalysisSection = () => {
     return 'strong';
   };
 
+  const getRhoStrength = (rho: number): string => {
+    const absRho = Math.abs(rho);
+    if (absRho < 0.30) return 'weak';
+    if (absRho < 0.60) return 'moderate';
+    return 'strong';
+  };
+
   let summary = `There is ${isSignificant ? 'a statistically significant' : 'no statistically significant'} association between ${rowVariable.label} and ${colVariable.label} `;
   summary += `(χ²=${chiSquareResult.chiSquare.toFixed(2)}, df=${chiSquareResult.df}, p=${chiSquareResult.pValue.toFixed(4)}${sigLevel}, V=${cramersV.toFixed(2)}). `;
   summary += `The effect size is ${getVStrength(cramersV)}`;
@@ -324,14 +331,20 @@ export const CrossTabAnalysisSection = () => {
   if (spearmanResult) {
    const rhoSignificant = spearmanResult.pValue <= 0.05;
    const direction = spearmanResult.rho > 0 ? 'positive' : 'negative';
+   const strength = getRhoStrength(spearmanResult.rho);
+
    if (rhoSignificant) {
-    summary += `, with a statistically significant ${direction} association (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
+    summary += `. The ordinal association is a ${strength} ${direction} correlation (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
    } else {
-    summary += `, with no statistically significant ordinal association (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
+    summary += `. The ordinal association is not statistically significant (ρ=${spearmanResult.rho.toFixed(3)}, p=${spearmanResult.pValue.toFixed(4)})`;
    }
   }
 
   summary += '.';
+
+  if (hasExpectedWarning) {
+   summary += ' Results should be interpreted with caution because more than 20 percent of cells have expected counts below 5.';
+  }
 
   return summary;
  };
