@@ -28,21 +28,49 @@ const VARIABLES: Variable[] = [
  { key: 'location', label: 'Location', type: 'categorical', values: [1, 2, 3], getLabel: (v) => getLabelForValue('location', v) },
  { key: 'household_income', label: 'Household Income', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('household_income', v) },
  { key: 'number_of_children', label: 'Number of Children', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('number_of_children', v) },
- { key: 'q19_nps_little_tikes_1_5', label: 'NPS Score', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Score ${v}` },
- { key: 'q18_preference_vs_brands_1_3', label: 'Brand Preference', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => getLabelForValue('q18_preference_vs_brands_1_3', v) },
+ { key: 'q19_nps_little_tikes_1_5', label: 'NPS Score (Q19)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Score ${v}` },
+ { key: 'nps_category', label: 'NPS Category (Q19)', type: 'categorical', values: [1, 2, 3], getLabel: (v) => ['Detractor', 'Passive', 'Promoter'][v - 1] },
+ { key: 'q18_preference_vs_brands_1_3', label: 'Brand Preference (Q18)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => getLabelForValue('q18_preference_vs_brands_1_3', v) },
  { key: 'q8_memories_influence_purchase_1_5', label: 'Memory Influence (Q8)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
  { key: 'memory_influence_binned', label: 'Memory Influence - Binned', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not at All (1)', 'Slightly-Moderately (2-3)', 'Very-Extremely (4-5)'][v - 1] },
  { key: 'q11_nostalgia_quartile', label: 'Nostalgia Quartile', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['Q1 (0-25)', 'Q2 (26-50)', 'Q3 (51-75)', 'Q4 (76-100)'][v - 1] },
  { key: 'q11_nostalgia_little_tikes_0_100', label: 'Nostalgia Intensity (Q11: 0-100)', type: 'ordinal', values: [1, 2, 3, 4], getLabel: (v) => ['0-25', '26-50', '51-75', '76-100'][v - 1] },
- { key: 'q6_childhood_brand_rank_little_tikes', label: 'LT Childhood Rank', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
+ { key: 'q6_childhood_brand_rank_little_tikes', label: 'LT Childhood Rank (Q6)', type: 'ordinal', values: [1, 2, 3, 4, 5, 6], getLabel: (v) => `Rank ${v}` },
  { key: 'q16_competitor_brand_rating_little_tikes_1_5', label: 'LT Competitor Rating', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Rating ${v}` },
- { key: 'modernness_binned', label: 'Modernness Perception (Q14a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Strongly Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
- { key: 'imaginative_play_importance_binned', label: 'Imaginative Play Importance (Q9c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderately Important (3)', 'Very-Extremely Important (4-5)'][v - 1] },
- { key: 'lt_imaginative_play_binned', label: 'LT Imaginative Play Rating (Q15c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
  { key: 'q12_little_tikes_represents', label: 'Brand Perception (Q12)', type: 'categorical', values: [1, 2, 3, 4, 5], getLabel: (v) => getLabelForValue('q12_little_tikes_represents', v) },
- { key: 'tech_innovation_binned', label: 'Tech Innovation Appetite (Q14b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Strongly Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
- { key: 'tech_importance_binned', label: 'Tech Importance (Q9e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderately Important (3)', 'Very-Extremely Important (4-5)'][v - 1] },
+ { key: 'q17_future_directions_excitement_1_4', label: 'Future Direction Preference (Q17)', type: 'categorical', values: [1, 2, 3, 4], getLabel: (v) => getLabelForValue('q17_future_directions_excitement_1_4', v) },
+ { key: 'q13_emotional_impact_makes_nostalgic_1_5', label: 'Nostalgia Feel (Q13a)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'nostalgia_feel_binned', label: 'Nostalgia Feel - Binned (Q13a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q13_emotional_impact_nostalgia_buy_likelihood_1_5', label: 'Nostalgia Purchase Lift (Q13b)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'nostalgia_purchase_binned', label: 'Nostalgia Purchase Lift - Binned (Q13b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q13_emotional_impact_trust_vs_newer_1_5', label: 'Nostalgia Trust Lift (Q13c)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'nostalgia_trust_binned', label: 'Nostalgia Trust Lift - Binned (Q13c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q14_perception_brand_feels_modern_1_5', label: 'Modernness Perception (Q14a)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'modernness_binned', label: 'Modernness Perception - Binned (Q14a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q14_perception_brand_incorporate_technology_1_5', label: 'Tech Innovation Appetite (Q14b)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'tech_innovation_binned', label: 'Tech Innovation Appetite - Binned (Q14b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q14_perception_brand_keep_traditional_1_5', label: 'Traditional Look Preference (Q14c)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'traditional_preference_binned', label: 'Traditional Look Preference - Binned (Q14c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q14_perception_brand_trendy_social_media_1_5', label: 'Social-Media Relevance (Q14d)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'social_media_relevance_binned', label: 'Social-Media Relevance - Binned (Q14d)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Disagree (1-2)', 'Neutral (3)', 'Agree (4-5)'][v - 1] },
+ { key: 'q9_importance_quality_durability_1_5', label: 'Quality & Durability Importance (Q9a)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'quality_importance_binned', label: 'Quality & Durability Importance - Binned (Q9a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
+ { key: 'q9_importance_safety_trust_1_5', label: 'Safety & Trust Importance (Q9b)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'safety_importance_binned', label: 'Safety & Trust Importance - Binned (Q9b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
+ { key: 'q9_importance_active_imaginative_play_1_5', label: 'Imaginative Play Importance (Q9c)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'imaginative_play_importance_binned', label: 'Imaginative Play Importance - Binned (Q9c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
+ { key: 'q9_importance_educational_developmental_1_5', label: 'Educational Value Importance (Q9d)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'educational_importance_binned', label: 'Educational Value Importance - Binned (Q9d)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
+ { key: 'q9_importance_use_of_technology_1_5', label: 'Tech Importance (Q9e)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'tech_importance_binned', label: 'Tech Importance - Binned (Q9e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
+ { key: 'q9_importance_childhood_memories_1_5', label: 'Childhood Memories Importance (Q9f)', type: 'ordinal', values: [1, 2, 3, 4, 5], getLabel: (v) => `Level ${v}` },
+ { key: 'memories_importance_binned', label: 'Childhood Memories Importance - Binned (Q9f)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Not Important (1-2)', 'Moderate (3)', 'Very Important (4-5)'][v - 1] },
  { key: 'lt_durability_binned', label: 'LT Durability Rating (Q15a)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'lt_safety_binned', label: 'LT Safety Rating (Q15b)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'lt_imaginative_play_binned', label: 'LT Imaginative Play Rating (Q15c)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'lt_educational_binned', label: 'LT Educational Rating (Q15d)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'lt_tech_binned', label: 'LT Tech Rating (Q15e)', type: 'ordinal', values: [1, 2, 3], getLabel: (v) => ['Low (0-50)', 'Medium (51-75)', 'High (76-100)'][v - 1] },
+ { key: 'primary_platform', label: 'Primary Parenting Platform (Q5)', type: 'categorical', values: [1, 2, 3, 4, 5, 6, 7], getLabel: (v) => ['Instagram', 'TikTok', 'Facebook', 'YouTube', 'Blogs/Websites', 'Texts/Group Chats', 'Other'][v - 1] },
 ];
 
 export const CrossTabAnalysisSection = () => {
@@ -54,6 +82,18 @@ export const CrossTabAnalysisSection = () => {
 
  const enrichedData = useMemo(() => {
   return filteredData.map(row => {
+   const binLikert = (val: number) => {
+    if (val <= 2) return 1;
+    if (val === 3) return 2;
+    return 3;
+   };
+
+   const bin0to100 = (val: number) => {
+    if (val <= 50) return 1;
+    if (val <= 75) return 2;
+    return 3;
+   };
+
    const nostalgia = row.q11_nostalgia_little_tikes_0_100;
    let quartile = 1;
    if (nostalgia > 75) quartile = 4;
@@ -65,46 +105,41 @@ export const CrossTabAnalysisSection = () => {
    if (memoryInfluence >= 4) memoryInfluenceBinned = 3;
    else if (memoryInfluence === 3 || memoryInfluence === 2) memoryInfluenceBinned = 2;
 
-   const modernness = row.q14_perception_brand_feels_modern_1_5;
-   let modernnessBinned = 2;
-   if (modernness <= 2) modernnessBinned = 1;
-   else if (modernness >= 4) modernnessBinned = 3;
+   const npsScore = row.q19_nps_little_tikes_1_5;
+   let npsCategory = 2;
+   if (npsScore <= 2) npsCategory = 1;
+   else if (npsScore >= 4) npsCategory = 3;
 
-   const imaginativePlayImportance = row.q9_importance_active_imaginative_play_1_5;
-   let imaginativePlayImportanceBinned = 2;
-   if (imaginativePlayImportance <= 2) imaginativePlayImportanceBinned = 1;
-   else if (imaginativePlayImportance >= 4) imaginativePlayImportanceBinned = 3;
-
-   const ltImaginativePlay = row.q15_lt_rating_vs_competitors_active_imaginative_play_0_100;
-   let ltImaginativePlayBinned = 1;
-   if (ltImaginativePlay > 75) ltImaginativePlayBinned = 3;
-   else if (ltImaginativePlay > 50) ltImaginativePlayBinned = 2;
-
-   const techInnovation = row.q14_perception_brand_incorporate_technology_1_5;
-   let techInnovationBinned = 2;
-   if (techInnovation <= 2) techInnovationBinned = 1;
-   else if (techInnovation >= 4) techInnovationBinned = 3;
-
-   const techImportance = row.q9_importance_use_of_technology_1_5;
-   let techImportanceBinned = 2;
-   if (techImportance <= 2) techImportanceBinned = 1;
-   else if (techImportance >= 4) techImportanceBinned = 3;
-
-   const ltDurability = row.q15_lt_rating_vs_competitors_quality_durability_0_100;
-   let ltDurabilityBinned = 1;
-   if (ltDurability > 75) ltDurabilityBinned = 3;
-   else if (ltDurability > 50) ltDurabilityBinned = 2;
+   const platforms = row.platforms_selections ? String(row.platforms_selections).split(',') : [];
+   const platformMap: Record<string, number> = {
+    '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7
+   };
+   const primaryPlatform = platforms.length > 0 ? (platformMap[platforms[0]] || 1) : 1;
 
    return {
     ...row,
     q11_nostalgia_quartile: quartile,
     memory_influence_binned: memoryInfluenceBinned,
-    modernness_binned: modernnessBinned,
-    imaginative_play_importance_binned: imaginativePlayImportanceBinned,
-    lt_imaginative_play_binned: ltImaginativePlayBinned,
-    tech_innovation_binned: techInnovationBinned,
-    tech_importance_binned: techImportanceBinned,
-    lt_durability_binned: ltDurabilityBinned,
+    nps_category: npsCategory,
+    primary_platform: primaryPlatform,
+    nostalgia_feel_binned: binLikert(row.q13_emotional_impact_makes_nostalgic_1_5),
+    nostalgia_purchase_binned: binLikert(row.q13_emotional_impact_nostalgia_buy_likelihood_1_5),
+    nostalgia_trust_binned: binLikert(row.q13_emotional_impact_trust_vs_newer_1_5),
+    modernness_binned: binLikert(row.q14_perception_brand_feels_modern_1_5),
+    tech_innovation_binned: binLikert(row.q14_perception_brand_incorporate_technology_1_5),
+    traditional_preference_binned: binLikert(row.q14_perception_brand_keep_traditional_1_5),
+    social_media_relevance_binned: binLikert(row.q14_perception_brand_trendy_social_media_1_5),
+    quality_importance_binned: binLikert(row.q9_importance_quality_durability_1_5),
+    safety_importance_binned: binLikert(row.q9_importance_safety_trust_1_5),
+    imaginative_play_importance_binned: binLikert(row.q9_importance_active_imaginative_play_1_5),
+    educational_importance_binned: binLikert(row.q9_importance_educational_developmental_1_5),
+    tech_importance_binned: binLikert(row.q9_importance_use_of_technology_1_5),
+    memories_importance_binned: binLikert(row.q9_importance_childhood_memories_1_5),
+    lt_durability_binned: bin0to100(row.q15_lt_rating_vs_competitors_quality_durability_0_100),
+    lt_safety_binned: bin0to100(row.q15_lt_rating_vs_competitors_safety_trust_0_100),
+    lt_imaginative_play_binned: bin0to100(row.q15_lt_rating_vs_competitors_active_imaginative_play_0_100),
+    lt_educational_binned: bin0to100(row.q15_lt_rating_vs_competitors_educational_developmental_0_100),
+    lt_tech_binned: bin0to100(row.q15_lt_rating_vs_competitors_use_of_technology_0_100),
    };
   });
  }, [filteredData]);
@@ -321,21 +356,24 @@ export const CrossTabAnalysisSection = () => {
   );
 
  const predefinedCrossTabs = [
-  { row: 'age_group', col: 'q19_nps_little_tikes_1_5', label: 'Age × NPS' },
-  { row: 'gender', col: 'q19_nps_little_tikes_1_5', label: 'Gender × NPS' },
-  { row: 'household_income', col: 'q19_nps_little_tikes_1_5', label: 'Income × NPS' },
-  { row: 'location', col: 'q19_nps_little_tikes_1_5', label: 'Location × NPS' },
-  { row: 'number_of_children', col: 'q19_nps_little_tikes_1_5', label: 'Number of Children × NPS' },
-  { row: 'age_group', col: 'q18_preference_vs_brands_1_3', label: 'Age × Brand Preference' },
-  { row: 'household_income', col: 'q18_preference_vs_brands_1_3', label: 'Income × Brand Preference' },
-  { row: 'q11_nostalgia_quartile', col: 'q19_nps_little_tikes_1_5', label: 'Nostalgia × NPS' },
-  { row: 'memory_influence_binned', col: 'age_group', label: 'Memory Influence × Age' },
-  { row: 'imaginative_play_importance_binned', col: 'q19_nps_little_tikes_1_5', label: 'Imaginative Play × NPS' },
+  { row: 'age_group', col: 'nps_category', label: 'Age × NPS Category' },
+  { row: 'gender', col: 'nps_category', label: 'Gender × NPS Category' },
+  { row: 'household_income', col: 'nps_category', label: 'Income × NPS Category' },
+  { row: 'primary_platform', col: 'nps_category', label: 'Platform × NPS Category' },
+  { row: 'nostalgia_feel_binned', col: 'nps_category', label: 'Nostalgia Feel × NPS' },
+  { row: 'nostalgia_purchase_binned', col: 'q18_preference_vs_brands_1_3', label: 'Nostalgia Purchase Lift × Preference' },
+  { row: 'nostalgia_trust_binned', col: 'nps_category', label: 'Nostalgia Trust × NPS' },
+  { row: 'traditional_preference_binned', col: 'age_group', label: 'Traditional Preference × Age' },
   { row: 'modernness_binned', col: 'age_group', label: 'Modernness × Age' },
-  { row: 'tech_innovation_binned', col: 'tech_importance_binned', label: 'Tech Innovation × Tech Importance' },
-  { row: 'q12_little_tikes_represents', col: 'q19_nps_little_tikes_1_5', label: 'Brand Perception × NPS' },
-  { row: 'lt_durability_binned', col: 'q18_preference_vs_brands_1_3', label: 'Durability × Brand Preference' },
-  { row: 'lt_imaginative_play_binned', col: 'imaginative_play_importance_binned', label: 'LT Imag. Play Rating × Importance' },
+  { row: 'social_media_relevance_binned', col: 'primary_platform', label: 'Social Media Relevance × Platform' },
+  { row: 'quality_importance_binned', col: 'lt_durability_binned', label: 'Quality Importance × LT Durability' },
+  { row: 'safety_importance_binned', col: 'lt_safety_binned', label: 'Safety Importance × LT Safety' },
+  { row: 'educational_importance_binned', col: 'lt_educational_binned', label: 'Educational Importance × LT Educational' },
+  { row: 'tech_importance_binned', col: 'lt_tech_binned', label: 'Tech Importance × LT Tech Rating' },
+  { row: 'q17_future_directions_excitement_1_4', col: 'age_group', label: 'Future Direction × Age' },
+  { row: 'q12_little_tikes_represents', col: 'nps_category', label: 'Brand Perception × NPS' },
+  { row: 'imaginative_play_importance_binned', col: 'lt_imaginative_play_binned', label: 'Imag. Play Importance × LT Rating' },
+  { row: 'memories_importance_binned', col: 'nostalgia_feel_binned', label: 'Memory Importance × Nostalgia Feel' },
  ];
 
  return (
