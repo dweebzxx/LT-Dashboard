@@ -109,6 +109,7 @@ export const CrossTabAnalysisSection = () => {
  const [colVar, setColVar] = useState<string>('q19_nps_little_tikes_1_5');
  const [analysisType, setAnalysisType] = useState<AnalysisType>('row_pct');
  const [showResults, setShowResults] = useState(true);
+ const [showVariableList, setShowVariableList] = useState(false);
 
  const enrichedData = useMemo(() => {
   return filteredData.map(row => {
@@ -375,27 +376,51 @@ export const CrossTabAnalysisSection = () => {
 
  const renderVariableList = () => (
     <div className="mt-8 pt-8 border-t border-gray-200">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Variable Definitions & Sources</h3>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-              <th className="px-4 py-2">Variable Label</th>
-              <th className="px-4 py-2">Source Column</th>
-              <th className="px-4 py-2">Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {VARIABLES.map((v) => (
-              <tr key={v.key} className="bg-white border-b hover:bg-gray-50">
-                <td className="px-4 py-2 font-medium text-gray-900">{v.label}</td>
-                <td className="px-4 py-2 font-mono text-xs">{v.key}</td>
-                <td className="px-4 py-2 capitalize">{v.type}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-gray-800">Variable Definitions & Sources</h3>
+        <button
+          onClick={() => setShowVariableList(!showVariableList)}
+          className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+        >
+          {showVariableList ? (
+            <>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+              Hide Variables
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              Show All Variables ({VARIABLES.length})
+            </>
+          )}
+        </button>
       </div>
+      {showVariableList && (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th className="px-4 py-2">Variable Label</th>
+                <th className="px-4 py-2">Source Column</th>
+                <th className="px-4 py-2">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {VARIABLES.map((v) => (
+                <tr key={v.key} className="bg-white border-b hover:bg-gray-50">
+                  <td className="px-4 py-2 font-medium text-gray-900">{v.label}</td>
+                  <td className="px-4 py-2 font-mono text-xs">{v.key}</td>
+                  <td className="px-4 py-2 capitalize">{v.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 
